@@ -1,4 +1,4 @@
-package posSystem;
+package iceCream;
 
 public class Flavor extends IceCream {
 	private String flavorDesc = "";

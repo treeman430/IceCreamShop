@@ -1,4 +1,4 @@
-package posSystem;
+package UI;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -6,9 +6,9 @@ import java.awt.event.*;
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-public class sysAdminUI extends JFrame {
+public class SystemAdminMenu extends JFrame {
 	
-	public sysAdminUI(String name) {
+	public SystemAdminMenu(String name) {
 		super(name);
 		this.setResizable(true);
 	}
@@ -58,7 +58,7 @@ public class sysAdminUI extends JFrame {
 	}
 	
 	static void sysAdminMenu() {
-		sysAdminUI menu = new sysAdminUI("System Administrator");
+		SystemAdminMenu menu = new SystemAdminMenu("System Administrator");
 		menu.setLayout(new GridLayout(0,1));
 		menu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		menu.placePanel(menu.getContentPane());

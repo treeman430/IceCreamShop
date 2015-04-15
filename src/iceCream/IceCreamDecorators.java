@@ -1,4 +1,4 @@
-package posSystem;
+package iceCream;
 
 public abstract class IceCreamDecorators extends IceCream {
 	IceCream iceCream;

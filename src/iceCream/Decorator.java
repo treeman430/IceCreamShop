@@ -1,4 +1,4 @@
-package posSystem;
+package iceCream;
 
 public class Decorator extends IceCreamDecorators {
 	private String decoratorSep = ", ";

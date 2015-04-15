@@ -1,7 +1,11 @@
-package posSystem;
+package UI;
 
+import iceCream.Decorator;
+import iceCream.Flavor;
+import iceCream.IceCream;
 import java.awt.*;
 import java.awt.event.*;
+
 import javax.swing.*;
 
 @SuppressWarnings("serial")
@@ -10,15 +14,12 @@ public class OrderMenu extends JFrame {
 	static int numOfDecorator = 0;
 	static int maxHeight;
 	static GridLayout layoutStyle;
-	static String displayDesc;
-	static double displayTotal;
 	static JTextField totalSum = new JTextField(20);
 	static JPanel flavorPanel = new JPanel();
 	static JPanel decoratorPanel = new JPanel();
 	static JPanel adminPanel = new JPanel();
-	static IceCream temp = new Flavor();
-	static IceCream orderFlavorItem = new Flavor();
-	static IceCream orderDecoratorItem = new Decorator(orderFlavorItem);
+	static IceCream orderItem = new Flavor();
+	static boolean isFlaSelected = false;
 	
 	public OrderMenu(String name) {
 		super(name);
@@ -36,14 +37,14 @@ public class OrderMenu extends JFrame {
 	public void placePanel(final Container container) {
 		/* Ice Cream Flavor */
 		final JLabel flaLbl = new JLabel("Ice Cream Flavor");
-		/* Ice Cream Decoratorm */
+		/* Ice Cream Decorator */
 		final JLabel decLbl = new JLabel("Ice Cream Decorator");
 		/* Admin Panel */
 		final JButton newIceCreamBtn = new JButton("New Ice Cream");
 		final JButton sysAdminBtn = new JButton("System Administrator");
 		final JLabel totalLbl = new JLabel("Total: ");
 		Object[] AdminList = new Object[] {newIceCreamBtn, sysAdminBtn, totalLbl, totalSum};
-		totalSum.setText(Double.toString(displayTotal)); 
+		totalSum.setText(Double.toString(orderItem.getPrice())); 
 		
 		flavorPanel.add(flaLbl);
 		decoratorPanel.add(decLbl);
@@ -54,18 +55,17 @@ public class OrderMenu extends JFrame {
 		
 		newIceCreamBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				IceCream orderFlavorItem = new Flavor();
-				temp = orderFlavorItem;
-				@SuppressWarnings("unused")
-				IceCream orderDecoratorItem = new Decorator(orderFlavorItem);
-				displayTotal = 0.0;
-				totalSum.setText(Double.toString(displayTotal));
+				orderItem = new Flavor();
+				orderItem = new Decorator(orderItem);
+				isFlaSelected = false;
+				orderItem.setInfo("", 0.0);
+				totalSum.setText(Double.toString(orderItem.getPrice())); 
 			}
 		});
 		
 		sysAdminBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				sysAdminUI.sysAdminMenu();
+				SystemAdminMenu.sysAdminMenu();
 			}
 		});
 		
@@ -102,20 +102,18 @@ public class OrderMenu extends JFrame {
 		btnName1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (btnType == "Flavor") {
-					IceCream orderFlavorItem = new Flavor();
-					orderFlavorItem.setInfo(btnName, btnPrice);
-					temp = orderFlavorItem;
-					displayDesc = orderFlavorItem.getDescription();
-					displayTotal = orderFlavorItem.getPrice();
-					totalSum.setText(Double.toString(displayTotal));
+					orderItem = new Flavor();
+					orderItem.setInfo(btnName, btnPrice);
+					isFlaSelected = true;
 				} else {
-					IceCream orderDecoratorItem = new Decorator(temp);
-					orderDecoratorItem.setInfo(btnName, btnPrice);
-					temp = orderDecoratorItem;
-					displayDesc = orderDecoratorItem.getDescription();
-					displayTotal = orderDecoratorItem.getPrice();
-					totalSum.setText(Double.toString(displayTotal));
+					if (isFlaSelected == false) {
+				        JOptionPane.showMessageDialog(null, "Please select flavor first.");
+					} else {
+						orderItem = new Decorator(orderItem);
+						orderItem.setInfo(btnName, btnPrice);
+					}
 				}
+				totalSum.setText(Double.toString(orderItem.getPrice()));
 			}
 		});
 		

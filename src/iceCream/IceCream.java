@@ -1,4 +1,4 @@
-package posSystem;
+package iceCream;
 
 public abstract class IceCream {
 	public abstract void setInfo(String desc, double price);
